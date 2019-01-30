@@ -1,13 +1,39 @@
 <?php
 namespace FeedBlitz\Lib;
 
+/**
+ * HttpClient Class
+ *
+ * @package FeedBlitz\Lib
+ */
 class HttpClient {
+    /**
+     * @var int HTTP status code.
+     */
     private static $httpStatusCode = null;
 
+    /**
+     * Gets the HTTP status code for the latest request.
+     *
+     * @since 1.0.0
+     */
     public static function getHttpStatusCode() {
         return self::$httpStatusCode;
     }
 
+    /**
+     * Performs an HTTP request via curl.
+     *
+     * @param string $method
+     * @param string $url
+     * @param string $queryString
+     * @param array  $headers
+     * @param string $auth
+     * @param int    $timeout
+     * @param bool   $secure
+     *
+     * @since 1.0.0
+     */
     public static function request(
         $method,
         $url,
@@ -15,7 +41,7 @@ class HttpClient {
         $headers = null,
         $auth = null,
         $timeout = null,
-        $secure = null
+        $secure = true
     ) {
         $ch = curl_init();
 
@@ -46,16 +72,16 @@ class HttpClient {
             curl_setopt($ch, CURLOPT_TIMEOUT, $timeout);
         }
 
-        if (!is_null($secure)) {
-            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, $secure);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $secure);
+        if (!$secure) {
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
         }
 
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
         $response = curl_exec($ch);
 
-        self::$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        self::$httpStatusCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
         curl_close($ch);
 

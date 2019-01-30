@@ -11,5 +11,5 @@ spl_autoload_register(function ($class) {
         return false;
     }
 
-    require_once($file); # import the class
+    require_once($file); // import the class
 });

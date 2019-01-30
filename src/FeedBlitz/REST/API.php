@@ -43,8 +43,12 @@ class API {
      * @since 1.0.0
      */
     public static function request($uri, $method = 'GET', $body = null) {
-        $url = self::FEEDBLITZ_REST_API_URL . $uri . '?api_key' . $this->apiKey;
+        $url = self::FEEDBLITZ_REST_API_URL . $uri . '?key=' . self::$apiKey;
 
-        return \FeedBlitz\Lib\HttpClient::request($method, $url, $body);
+        $response = \FeedBlitz\Lib\HttpClient::request($method, $url, $body);
+
+        $xml = simplexml_load_string($response);
+
+        return ((false === $xml) ? $response : $xml);
     }
 }
