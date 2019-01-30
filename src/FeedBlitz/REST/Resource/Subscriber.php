@@ -7,11 +7,25 @@ namespace FeedBlitz\REST\Resource;
  * @package FeedBlitz\REST\Resource
  */
 class Subscriber {
-    public function get($id = null, $list = null) {
+    /**
+     * Get a subscriber.
+     *
+     * @since 1.0.0
+     *
+     * @param int $subscriber_id
+     */
+    public function get($subscriber_id = null) {
         return \FeedBlitz\REST\API::request('/subscribers', 'GET');
     }
 
-    public function remove($id = null) {
-        return \FeedBlitz\REST\API::request('/subscribers/' . $id, 'DELETE');
+    /**
+     * Remove a subscriber.
+     *
+     * @since 1.0.0
+     *
+     * @param int $subscriber_id
+     */
+    public function remove($subscriber_id = null) {
+        return \FeedBlitz\REST\API::request('/subscribers/' . $subscriber_id, 'DELETE');
     }
 }

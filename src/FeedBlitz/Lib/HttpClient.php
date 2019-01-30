@@ -9,6 +9,8 @@ namespace FeedBlitz\Lib;
 class HttpClient {
     /**
      * @var int HTTP status code.
+     *
+     * @since 1.0.0
      */
     private static $httpStatusCode = null;
 
